@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: investment-os-agent
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false          # 배포 시 입력(비밀, 깃에 안 올라감)
+      - key: MODEL
+        value: claude-sonnet-4-6
+      - key: WEB_SEARCH_TOOL
+        value: web_search_20260209
+      - key: WEB_SEARCH_MAX_USES
+        value: "6"
+      - key: ALLOWED_ORIGINS
+        sync: false          # 대시보드 호스트 주소
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_CHAT_ID
+        sync: false
